@@ -27,7 +27,7 @@ void *myalloc(int size) {
     }
     struct block *curr_block = head;
     while (curr_block != NULL && curr_block->in_use != 1) {
-        if (curr_block->size >= size) {
+        if (curr_block->size >= PADDED_SIZE(size)) {
             curr_block->in_use = 1;
             int padded_block_size = PADDED_SIZE(sizeof(struct block));
             return PTR_OFFSET(curr_block, padded_block_size);
@@ -48,7 +48,7 @@ void print_data(void)
 
     while (b != NULL) {
         // Uncomment the following line if you want to see the pointer values
-        printf("[%p:%d,%s]\n", b, b->size, b->in_use? "used": "free");
+        // printf("[%p:%d,%s]\n", b, b->size, b->in_use? "used": "free");
         printf("[%d,%s]", b->size, b->in_use? "used": "free");
         if (b->next != NULL) {
             printf(" -> ");
